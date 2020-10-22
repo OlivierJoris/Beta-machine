@@ -52,46 +52,49 @@
 %\newpage
 
 \subsection*{Control logic}
-\paragraph{}bla bla
+\paragraph{}We had to implement the instructions \texttt{ADDC}, \texttt{AND}, \texttt{CMPLEC}, \texttt{LD}, and \texttt{BNE} inside the control logic\footnote{Instructions associated to the lowest student id (20180521) of our group.}. Also, we implemented the instruction \texttt{ST} which allows us to test the instruction \texttt{LD} more easily.\\ \newline
+\makebox[\linewidth]{
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Instruction}} & \textbf{Address} & \multicolumn{1}{c|}{\textbf{ALUFN}} & \multicolumn{1}{c|}{\textbf{WERF}} & \multicolumn{1}{c|}{\textbf{BSEL}} & \multicolumn{1}{c|}{\textbf{WDSEL}} & \multicolumn{1}{c|}{\textbf{WR}} & \multicolumn{1}{c|}{\textbf{RA2SEL}} & \multicolumn{1}{c|}{\textbf{PCSEL}} & \multicolumn{1}{c|}{\textbf{Hexadecimal}} \\ \hline
+ADDC                                       & 110000           & 0001                                & 1                                  & 0                                  & 01                                  & 0                                & X(0)                                 & 00                                  & 190                                       \\ \hline
+AND                                        & 101000           & 0101                                & 1                                  & 1                                  & 01                                  & 0                                & 0                                    & 00                                  & 5D0                                       \\ \hline
+CMPLEC                                     & 110110           & 1110                                & 1                                  & 0                                  & 01                                  & 0                                & X(0)                                 & 00                                  & E90                                       \\ \hline
+LD                                         & 011000           & 0001                                & 1                                  & 0                                  & 10                                  & 0                                & X(0)                                 & 00                                  & 1A0                                       \\ \hline
+BNE                                        & 011110           & X(0000)                             & 1                                  & X(0)                               & 00                                  & 0                                & X(0)                                 & $\lnot$z                               & 080                                       \\ \hline
+ST                                         & 011001           & 0001                                & 0                                  & 0                                  & X(00)                               & 1                                & 1                                    & 00                                  & 10C                                       \\ \hline
+\end{tabular}
+}
 
 \subsection*{Instruction memory}
-\paragraph{}The instructions we implemented in order to test the instructions \texttt{ADDC}, \texttt{AND}, \texttt{CMPLEC}, \texttt{LD}, and \texttt{BNE}\footnote{Instructions associated to the lowest student id (20180521) of our group.}:
-\begin{table}[!ht]
-\centering
-\begin{tabular}{|l|l|l|}
+\paragraph{}The instructions we implemented in order to test the instructions \texttt{ADDC}, \texttt{AND}, \texttt{CMPLEC}, \texttt{LD}, and \texttt{BNE}\footnote{See footnote 1.}:\\ \newline
+\makebox[\linewidth]{
+\begin{tabular}{|l|l|l|l|l|l|}
 \hline
-\multicolumn{1}{|c|}{\textbf{Instruction}} & \multicolumn{1}{c|}{\textbf{Hexadecimal}} & \multicolumn{1}{c|}{\textbf{Effect}}  \\ \hline
-ADDC(R31, 5, R0)                           & C01F0005                                  & R0$=$5                               \\ \hline
-ADDC(R31, -5, R1)                          & C03FFFFB                                  & R1$=$-5                              \\ \hline
-ADDC(R0, 5, R2)                            & C0400005                                  & R2$=$10                              \\ \hline
-ADDC(R1, 5, R3)                            & C0610005                                  & R3$=$0                              \\ \hline
-ADDC(R1, -5, R28)                          & C381FFFB                                  & R3$=$0                               \\ \hline
-                                           &                                           &                                       \\ \hline
-ADDC(R31, 12, R0)                          & C01F000C                                  & R0$=$12                              \\ \hline
-ADDC(R31, 10, R1)                          & C03F000A                                  & R1$=$10                              \\ \hline
-AND(R0, R1, R2)                            & A0400800                                  & R2$=$8                               \\ \hline
-                                           &                                           &                                       \\ \hline
-ADDC(R31, 5, R0)                           & C01F0005                                  & R0$=$5                             \\ \hline
-ADDC(R31, -5, R1)                          & C03FFFFB                                  & R1$=$-5                              \\ \hline
-CMPLEC(R0, 10, R30)                        & DBC0000A                                  & R30$=$1                              \\ \hline
-CMPLEC(R0, 5, R29)                         & DBA00005                                  & R29$=$1                              \\ \hline
-CMPLEC(R0, 2, R28)                         & DB800002                                  & R28$=$0                              \\ \hline
-CMPLEC(R1, -6, R30)                        & DBC1FFFA                                  & R30$=$0                              \\ \hline
-CMPLEC(R1, -5, R29)                        & DBA1FFFB                                  & R29$=$1                              \\ \hline
-CMPLEC(R1, -4, R28)                        & DB81FFFC                                  & R28$=$1                              \\ \hline
-                                           &                                           &                                       \\ \hline
-ADDC(R31, 0, R0)                           & C01F0000                                  & R0$=$0                               \\ \hline
-ADDC(R31, 21, R30)                         & C3DF0015                                  & R30$=$21                             \\ \hline
-ST(R30, 0, R0)                             & 67C00000                                  & MEM[Reg[R0]]$\leftarrow$Reg[R30]\\ \hline
-LD(R0, 0, R1)                              & 60200000                                  & Reg[R1]$\leftarrow$Mem[Reg[R0]]\\ \hline
-ADDC(R31, 4, R0)                           & C01F0004                                  & R0$=$4                               \\ \hline
-ADDC(R31, 7, R2)                           & C05F0007                                  & R2$=$7                               \\ \hline
-ST(R2, 0, R0)                              & 64400000                                  & MEM[Reg[R0]]$\leftarrow$Reg[R2]\\ \hline
+\multicolumn{1}{|c|}{\textbf{Instruction}} & \multicolumn{1}{c|}{\textbf{Hexadecimal}} & \multicolumn{1}{c|}{\textbf{Effect}} & \multicolumn{1}{c|}{Instruction} & \multicolumn{1}{c|}{Hexadecimal} & \multicolumn{1}{c|}{Effect}                                                             \\ \hline
+ADDC(R31, 5, R0)                           & C01F0005                                  & R0$=$5                               & CMPLEC(R1, -5, R29)              & DBA1FFFB                         & R29$=$1                                                                                 \\ \hline
+ADDC(R31, -5, R1)                          & C03FFFFB                                  & R1$=-$5                              & CMPLEC(R1, -4, R28)              & DB81FFFC                         & R28$=$1                                                                                 \\ \hline
+ADDC(R0, 5, R2)                            & C0400005                                  & R2$=$10                              & ADDC(R31, 0, R0)                 & C01F0000                         & R0$=$0                                                                                  \\ \hline
+ADDC(R1, 5, R3)                            & C0610005                                  & R3$=$0                               & ADDC(R31, 21, R30)               & C3DF0015                         & R30$=$21                                                                                \\ \hline
+ADDC(R1, -5, R28)                          & C381FFFB                                  & R28$=-$10                              & ST(R30, 0, R0)                   & 67C00000                         & \begin{tabular}[c]{@{}l@{}}MEM{[}Reg{[}R0{]}{]}\\ $\leftarrow$Reg{[}R30{]}\end{tabular} \\ \hline
+ADDC(R31, 12, R0)                          & C01F000C                                  & R0$=$12                              & LD(R0, 0, R1)                    & 60200000                         & \begin{tabular}[c]{@{}l@{}}Reg{[}R1{]}\\ $\leftarrow$Mem{[}Reg{[}R0{]}{]}\end{tabular}  \\ \hline
+ADDC(R31, 10, R1)                          & C03F000A                                  & R1$=$10                              & ADDC(R31, 4, R0)                 & C01F0004                         & R0$=$4                                                                                    \\ \hline
+AND(R0, R1, R2)                            & A0400800                                  & R2$=$8                               & ADDC(R31, 7, R2)                 & C05F0007                         & R2$=$7                                                                                  \\ \hline
+ADDC(R31, 5, R0)                           & C01F0005                                  & R0$=$5                               & ST(R2, 0, R0)                    & 64400000                         & \begin{tabular}[c]{@{}l@{}}MEM{[}Reg{[}R0{]}{]}\\ $\leftarrow$Reg{[}R2{]}\end{tabular}  \\ \hline
+ADDC(R31, -5, R1)                          & C03FFFFB                                  & R1$=-$5                              & ADDC(R31,0,R0)                   & C01F0000                         & R0$=$0                                                                                    \\ \hline
+CMPLEC(R0, 10, R30)                        & DBC0000A                                  & R30$=$1                              & BNE(R0,0,R31)                    & 7BE0FFE7                         & No jump                                                                                 \\ \hline
+CMPLEC(R0, 5, R29)                         & DBA00005                                  & R29$=$1                              & ADDC(R31,1,R1)                   & C03F0001                         & R1$=$1                                                                                    \\ \hline
+CMPLEC(RO,2,R28)                           & DB800002                                  & R28$=$0                                & BNE(R1,0,R31)                    & 7BE1FFE5                         & \begin{tabular}[c]{@{}l@{}}Jump to\\ first instruction\end{tabular}                     \\ \hline
+CMPLEC(R1, -6, R30)                        & DBC1FFFA                                  & R30$=$0                              &                                  &                                  &                                                                                         \\ \hline
 \end{tabular}
-\end{table}
-\paragraph{}The first 4 lines are testing the \texttt{ADD} instruction.\\
-The following 3 lines are testing the \texttt{AND} instruction. In the same instruction we are testing every possibility (1\&1, 1\&0, 0\&1, and 0\&0).\\
-The following 8 lines are testing the \texttt{CMPLEC} instruction. The first 2 \texttt{ADDC} are used to put desired values inside the register file.\\
-The following 7 lines are testing the \texttt{LD} instruction. We are using \texttt{R0} as a memory pointer. Then, we are storing 21 at address 0 in memory and loading the content at address 0 in \texttt{R1}. Finally, we are increasing \texttt{R0} by 4, storing 7 at address given by \texttt{R0}, and loading the content at the address given by \texttt{R0} in \texttt{R2}.
+}
+\paragraph{}The first 5 lines of the first column are testing the \texttt{ADD} instruction.\\
+The following 3 lines are testing the \texttt{AND} instruction. In the same instruction, we are testing every possibility (1\&1, 1\&0, 0\&1, and 0\&0).\\
+The other lines of the first column and the first 2 lines of the second column are testing the \texttt{CMPLEC} instruction. The first 2 \texttt{ADDC} are used to put desired values inside the register file.\\
+The following 7 lines are testing the \texttt{LD} instruction. We are using \texttt{R0} as a memory pointer. Then, we are storing 21 at address 0 in memory and loading the content at address 0 in \texttt{R1}. Finally, we are increasing \texttt{R0} by 4, storing 7 at address given by \texttt{R0}, and loading the content at the address given by \texttt{R0} in \texttt{R2}.\\
+Finally, the remaining lines of the second column are testing the \texttt{BNE} instruction.
+
+\subsection*{Logisim and ROMs}
+\paragraph{}From time to time, Logisim may loose data of some ROMs. Our implementation of the $\beta$-machine is using 2 ROMs. Inside the instruction memory, the ROM is using addresses $\in \left[00; 2A\right]$. If some of these words are empty, please load the file \texttt{im\_rom} inside this memory. Inside the control logic, the ROM is using addresses mentioned in the table in the section \textit{Control logic}. If some of these words are empty, please load the file \texttt{cl\_rom} inside the memory.
 
 \end{document}
