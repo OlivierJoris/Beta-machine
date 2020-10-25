@@ -88,7 +88,7 @@ CMPLEC(RO,2,R28)                           & DB800002                           
 CMPLEC(R1, -6, R30)                        & DBC1FFFA                                  & R30$=$0                              &                                  &                                  &                                                                                         \\ \hline
 \end{tabular}
 }
-\paragraph{}The first 5 lines of the first column are testing the \texttt{ADD} instruction.\\
+\paragraph{}The first 5 lines of the first column are testing the \texttt{ADDC} instruction.\\
 The following 3 lines are testing the \texttt{AND} instruction. In the same instruction, we are testing every possibility (1\&1, 1\&0, 0\&1, and 0\&0).\\
 The other lines of the first column and the first 2 lines of the second column are testing the \texttt{CMPLEC} instruction. The first 2 \texttt{ADDC} are used to put desired values inside the register file.\\
 The following 7 lines are testing the \texttt{LD} instruction. We are using \texttt{R0} as a memory pointer. Then, we are storing 21 at address 0 in memory and loading the content at address 0 in \texttt{R1}. Finally, we are increasing \texttt{R0} by 4, storing 7 at address given by \texttt{R0}, and loading the content at the address given by \texttt{R0} in \texttt{R2}.\\
